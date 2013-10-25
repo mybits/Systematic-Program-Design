@@ -13,42 +13,50 @@
 (define TEXT-SIZE  12)
 (define TEXT-COLOR "BLACK")
 
+(define KEY-VAL-SEP ":")
+
+(define BOX (rectangle 20 2 "solid" "white"))
+
+
 
 
 ;; ================= 
 ;; Data Definitions:       
 
 
-(define-struct dir (name lod loi))
-;; Dir is (make-dir String ListOfDir ListOfImage)
-;; interp. a directory with 
-;;                   a name,  
-;;                   an arbitrary number of sub-directories, 
-;;                   an arbitrary number of images.
+(define-struct node (key val l r))
+;; A BST (Binary Search Tree) is one of:
+;;  - false
+;;  - (make-node Integer String BST BST)
+;; interp. false means no BST, or empty BST
+;;         key is the node key
+;;         val is the node val
+;;         l and r are left and right subtrees
+;; INVARIANT: for a given node:
+;;     key is > all keys in its l(eft)  child
+;;     key is < all keys in its r(ight) child
+;;     the same key never appears twice in the tree
 
-;; ListOfDir is one of:
-;; - empty 
-;; - (cons Dir ListOfDir)
-;; interp. a list of directories; represents sub-directories
-
-;; ListOfImage is one of: 
-;; - empty
-;; - (cons Image ListOfImage)
-;; interp. a list of images contained within a directory
-
-
+(define BST0 false)
+(define BST1 (make-node 1 "small" false false))
+(define BST3 (make-node 3 "circles" BST1 false))
+(define BST8 (make-node 8 "rect" false false))
+(define BST5 
+  (make-node 5 "draw" BST3 BST8))
+(define BST20 
+  (make-node 20 "paint"
+             (make-node 17 "star" false false)
+             (make-node 30 "square" false false)))
+(define BST10 (make-node 10 "port" BST5 BST20))
 
 #;
-(define (fn-for-dir d)
-  (... (dir-name d)  ;String
-       (fn-for-lod (dir-lod d)) 
-       (fn-for-loi (dir-loi d))))
-#;
-(define (fn-for-lod lod)
-  (cond [(empty? lod) (...)]
+(define (fn-for-bst d)
+  (cond [(false? d) (...)]
         [else
-         (... (fn-for-dir (first lod))
-              (fn-for-lod (rest lod)))]))
+         (... (node-key d)    ;Integer
+              (node-val d)    ;String
+              (fn-for-bst (node-l d))
+              (fn-for-bst (node-r d)))]))
 
 
 
@@ -116,15 +124,22 @@
 ;; ListOfImage -> ListOfImage
 ;; sorting images in list from largest to smallest 
 (check-expect (sort-imgs empty) empty)
+(check-expect (sort-imgs (cons I2 (cons I1 empty)))
+              (cons I2 (cons I1 empty)))
+(check-expect (sort-imgs (cons I1 (cons I2 empty)))
+              (cons I2 (cons I1 empty)))
+(check-expect (sort-imgs (cons I1 (cons I3 (cons I2 empty))))
+              (cons I3 (cons I2 (cons I1 empty)))) 
 
 ;(define (sort-imgs loi) loi)
-
 
 (define (sort-imgs loi)
   (cond [(empty? loi) empty]
         [else
          (insert (first loi)
-                 (sort-imgs (rest loi)))])) 
+                 (sort-imgs (rest loi)))]))
+
+
 
 
 
