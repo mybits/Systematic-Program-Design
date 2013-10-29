@@ -13,10 +13,10 @@
 
 ;; ListOfString -> Boolean
 ;; produce true if los includes "UBC"
-(check-expect (contains-ubc? empty) false)
-(check-expect (contains-ubc? (cons "McGill" empty)) false)
-(check-expect (contains-ubc? (cons "UBC" empty)) true)
-(check-expect (contains-ubc? (cons "McGill" (cons "UBC" empty))) true)
+;(check-expect (contains-ubc? empty) false)
+;(check-expect (contains-ubc? (cons "McGill" empty)) false)
+;(check-expect (contains-ubc? (cons "UBC" empty)) true)
+;(check-expect (contains-ubc? (cons "McGill" (cons "UBC" empty))) true)
 
 ;(define (contains-ubc? los) false) ;stub
 
@@ -26,22 +26,15 @@
 ;; ListOfString -> Boolean
 ;; produce true if los includes "McGill"
 
-(check-expect (contains-mcgill? empty) false)
-(check-expect (contains-mcgill? (cons "UBC" empty)) false)
-(check-expect (contains-mcgill? (cons "McGill" empty)) true)
-(check-expect (contains-mcgill? (cons "UBC" (cons "McGill" empty))) true)
+;(check-expect (contains-mcgill? empty) false)
+;(check-expect (contains-mcgill? (cons "UBC" empty)) false)
+;(check-expect (contains-mcgill? (cons "McGill" empty)) true)
+;(check-expect (contains-mcgill? (cons "UBC" (cons "McGill" empty))) true)
 
 ;(define (contains-mcgill? los) false) ;stub
  
 (define (contains-mcgill? los) (contains? "McGill" los))
-
-
-;; produce true if los includes s
-(check-expect (contains? "UBC" empty) false)
-(check-expect (contains? "UBC" (cons "McGill" empty)) false)
-(check-expect (contains? "UBC" (cons "UBC" empty)) true)
-(check-expect (contains? "UBC" (cons "McGill" (cons "UBC" empty))) true)
-(check-expect (contains? "Toronto" (cons "UBC" (cons "McGill" empty))) false) 
+ 
 
 (define (contains? s los)
   (cond [(empty? los) false]
