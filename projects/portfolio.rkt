@@ -13,6 +13,11 @@
 (define TEXT-SIZE  12)
 (define TEXT-COLOR "BLACK")
 
+(define VSPACE 
+  (rectangle 40 10 "solid" "white")) ; space b/w items above 
+
+(define HSPACE 
+  (rectangle 10 40 "solid" "white")) ; space b/w items beside
 
 
 ;; ================= 
